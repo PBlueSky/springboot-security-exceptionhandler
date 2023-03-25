@@ -1,0 +1,46 @@
+
+stages:  
+  - test        
+  - build
+  - depoly
+
+
+complie-test-job:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  tags: 
+    - test
+  script:
+    - echo "Compiling and test the code..."
+    - mvn clean
+    - mvn compile
+    - mvn test
+    - echo "Compiling complete"
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags:
+    - build
+  script:
+    - echo "Package the code..."
+    - mvn package
+    - echo "Package complete."
+  artifacts:
+    paths:
+      - target
+  needs:
+    - complie-test-job
+
+depoly-job:       # This job runs in the build stage, which runs first.
+  stage: depoly
+  tags:
+    - build
+  script:
+    - echo "Deploying the code..."
+    - pwd
+    - ls -al
+    - docker compose down
+    - docker compose up -d --build
+    - docker rmi $(docker images -f "dangling=true" -q) # 删除所有的悬空镜像
+    - echo "Depoly complete."
+  needs:
+    - build-job

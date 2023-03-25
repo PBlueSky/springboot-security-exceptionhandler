@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  springboot-exception-handler:
+    restart: always
+    build:
+      context: ./                  # 指定dockerfile文件的所在路径
+      dockerfile: Dockerfile    # 指定Dockerfile文件名称
+    image: springboot-exception-handler:1.0             #自定义镜像名和版本号
+    container_name: springboot-exception-handler
+    ports:
+      - 8080:8080
+    environment:
+      TZ: Asia/Shanghai
