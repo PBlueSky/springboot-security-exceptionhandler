@@ -1,5 +1,5 @@
 # springboot-security-exceptionhandler
 springboot结合springsecurity和异常处理
 
-1、处理SpringSecurity中访问拒绝异常，并作了同一异常处理
-2、使用GitLab进行CICD构建
+###### 1、处理SpringSecurity中访问拒绝异常，并作了同一异常处理
+###### 2、使用GitLab进行CICD构建
